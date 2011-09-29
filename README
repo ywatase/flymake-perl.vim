@@ -1,0 +1,23 @@
+Flymake plugin for perl
+
+File
+  - ftplugin/perl/flymake.vim
+  - README
+
+What's this
+  - find lib directory and setlocal path and makeprg
+  - how find lib
+
+    - 3 pattern
+
+       - /path/to/perl-file
+         - set /path/to/{lib,extlib/lib/perl5,extlib/lib/perl5/$Config{archname}} if exists.
+
+       - under /path/to/MyApp/t
+         - set /path/to/MyApp/{t/lib,lib,extlib/lib/perl5,extlib/lib/perl5/$Config{archname}} if exists.
+
+       - under /path/to/MyApp/{extlib,lib,bin,script,scripts,root}
+         - set /path/to/MyApp/lib,extlib/lib/perl5,extlib/lib/perl5/$Config{archname}} if exists.
+
+Author
+  ywatase <ywatase@gmail.com>

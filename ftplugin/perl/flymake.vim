@@ -24,18 +24,15 @@ function! RunMake ()
 
 	if expand('%:p') =~ l:regex_under_t
 		let l:result = matchstr(expand('%:p'), l:regex_under_t)
-		echo l:result
 		let l:dir = simplify(l:result . '/t/lib')
 		if isdirectory(l:dir)
 			call add(l:include_path, l:dir)
 		endif 
 	elseif expand('%:p') =~ l:regex_under_other
 		let l:result = matchstr(expand('%:p'), l:regex_under_other)
-		echo l:result
 	else
 		let l:result = expand('%:p:h')
 	endif
-	echo l:result
 	let l:dir = simplify(l:result . '/lib')
 	if isdirectory(l:dir)
 		call add(l:include_path, l:dir)

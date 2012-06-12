@@ -1,6 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "          FILE:  flymake-perl.vim
-" Last Modified:  2011/09/29.
+" Last Modified:  2012/05/22.
 "        AUTHOR:  Yusuke Watase (ym), ywatase@gmail.com
 "       VERSION:  1.0
 "       CREATED:  2010/04/22 12:28:48
@@ -19,8 +19,8 @@ function! RunMake ()
 	""" Regex
 	" under MyApp/t
 	let l:regex_under_t = '^.\{-}\%(/t/\%(lib/t/\)\?\)\@='
-	" under MyApp/{extlib,lib,bin,script,scripts,root}
-	let l:regex_under_other  = '^.*/\%(\%(ext\)\?lib\|bin\|scripts\?\|root\)\@='
+	" under MyApp/{extlib,lib,local,bin,script,scripts,root}
+	let l:regex_under_other  = '^.*/\%(\%(ext\)\?lib\|local\|bin\|scripts\?\|root\)\@='
 
 	if expand('%:p') =~ l:regex_under_t
 		let l:result = matchstr(expand('%:p'), l:regex_under_t)
@@ -42,6 +42,14 @@ function! RunMake ()
 		call add(l:include_path, l:dir)
 	endif 
 	let l:dir = simplify(l:result . '/extlib/lib/perl5/'.l:archname)
+	if isdirectory(l:dir)
+		call add(l:include_path, l:dir)
+	endif 
+	let l:dir = simplify(l:result . '/local/lib/perl5')
+	if isdirectory(l:dir)
+		call add(l:include_path, l:dir)
+	endif 
+	let l:dir = simplify(l:result . '/local/lib/perl5/'.l:archname)
 	if isdirectory(l:dir)
 		call add(l:include_path, l:dir)
 	endif 

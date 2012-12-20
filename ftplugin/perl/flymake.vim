@@ -55,7 +55,7 @@ function! RunMake ()
 		call add(l:include_path, l:dir)
 	endif 
 	let l:cmd_parse_result = 'perl -pe '. "'" . '/at\s(\S+)\sline\s(\d+)/;print qq{$1:$2:};' . "'"
-	execute ':setlocal makeprg=' . escape('env ' . l:perlenv . ' perl ' . join(map(copy(l:include_path), '"-I ".v:val'),' ') . ' -cw % 2>&1 \| ' . l:cmd_parse_result , ' \();$|')
+	execute ':setlocal makeprg=' . escape('env ' . s:perlenv . ' perl ' . join(map(copy(l:include_path), '"-I ".v:val'),' ') . ' -cw % 2>&1 \| ' . l:cmd_parse_result , ' \();$|')
 	execute ':setlocal path='. join(add(map(copy(l:include_path), 'escape(v:val, " ,")'), &l:path), ',')
 	setlocal errorformat=%f:%l:%m
 	make

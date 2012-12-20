@@ -1,6 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "          FILE:  flymake-perl.vim
-" Last Modified:  2012/05/22.
+" Last Modified:  2012/12/20.
 "        AUTHOR:  Yusuke Watase (ym), ywatase@gmail.com
 "       VERSION:  1.0
 "       CREATED:  2010/04/22 12:28:48
@@ -11,6 +11,7 @@ if exists("b:did_flymake_perl_ftplugin")
 	finish
 endif
 let b:did_flymake_perl_ftplugin = 1
+let s:perlenv  = 'PERL5LIB=\"'. $PERL5LIB .'\"'
 
 function! RunMake ()
 	let l:include_path = []
@@ -54,7 +55,7 @@ function! RunMake ()
 		call add(l:include_path, l:dir)
 	endif 
 	let l:cmd_parse_result = 'perl -pe '. "'" . '/at\s(\S+)\sline\s(\d+)/;print qq{$1:$2:};' . "'"
-	execute ':setlocal makeprg=' . escape('perl ' . join(map(copy(l:include_path), '"-I ".v:val'),' ') . ' -cw % 2>&1 \| ' . l:cmd_parse_result , ' \();$|')
+	execute ':setlocal makeprg=' . escape('env ' . l:perlenv . ' perl ' . join(map(copy(l:include_path), '"-I ".v:val'),' ') . ' -cw % 2>&1 \| ' . l:cmd_parse_result , ' \();$|')
 	execute ':setlocal path='. join(add(map(copy(l:include_path), 'escape(v:val, " ,")'), &l:path), ',')
 	setlocal errorformat=%f:%l:%m
 	make
